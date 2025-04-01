@@ -16,7 +16,7 @@ def get_response(input,pc,prompt):
     return response.text
 def pdf_convertor(uploaded_file):
     if uploaded_file is not None:
-        images=pdf2image.convert_from_bytes(uploaded_file.read())
+        images=pdf2image.convert_from_bytes(uploaded_file.read(),dpi=70)
         first_page=images[0]
         img_byte_arr = io.BytesIO()
         first_page.save(img_byte_arr,format='JPEG')
