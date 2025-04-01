@@ -11,12 +11,15 @@ import google.generativeai as genai
 
 genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
 
-def get_response(input,pc,prompt):
+def get_response(prompt,pc,input):
     model=genai.GenerativeModel('gemini-2.5-pro-exp-03-25')
-    response=model.generate_content([input,pc[0],prompt])
+    response=model.generate_content([prompt,pc[0],input])
     return response.text
+    
 def pdf_convertor(uploaded_file):
+    #if os.path.exists(uploaded_file):
     if uploaded_file is not None:
+        #images=pdf2image.convert_from_path(uploaded_file)
         images=pdf2image.convert_from_bytes(uploaded_file.read())
         first_page=images[0]
         img_byte_arr = io.BytesIO()
@@ -37,6 +40,7 @@ st.set_page_config(page_title="ATS v1.0")
 st.header("ATS Powered by GEMINI")
 input_text=st.text_area("Jod Description: ",key="input")
 uploaded_file=st.file_uploader("Upload your resume(PDF recommended)",type=["pdf"])
+#uploaded_file=os.path.join("Sample Resume","Resume-2.pdf")
 
 if uploaded_file is not None:
     st.write("PDF uploded sucessfully")
