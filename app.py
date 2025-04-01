@@ -8,7 +8,8 @@ from PIL import Image
 import pdf2image
 import google.generativeai as genai
 
-genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
+
+genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
 
 def get_response(input,pc,prompt):
     model=genai.GenerativeModel('gemini-2.5-pro-exp-03-25')
@@ -16,7 +17,7 @@ def get_response(input,pc,prompt):
     return response.text
 def pdf_convertor(uploaded_file):
     if uploaded_file is not None:
-        images=pdf2image.convert_from_bytes(uploaded_file.read(),dpi=70)
+        images=pdf2image.convert_from_bytes(uploaded_file.read())
         first_page=images[0]
         img_byte_arr = io.BytesIO()
         first_page.save(img_byte_arr,format='JPEG')
