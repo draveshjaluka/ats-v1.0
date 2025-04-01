@@ -18,7 +18,7 @@ st.header("ATS Powered by GEMINI")
 # Caching API responses to avoid redundant requests
 @st.cache_data
 def get_response_cached(input_text, pdf_content, prompt):
-    model = genai.GenerativeModel('gemini-1.5-flash')
+    model = genai.GenerativeModel('gemini-2.5-pro-exp-03-25')
     response = model.generate_content([input_text, pdf_content[0], prompt])
     return response.text
 
